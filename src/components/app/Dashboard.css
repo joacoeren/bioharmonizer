@@ -7,16 +7,7 @@
   -webkit-overflow-scrolling: touch;
   min-height: 0;
   height: 100%;
-}
-
-@media (max-width: 768px) {
-  .dashboard {
-    overflow-y: visible;
-  }
-  
-  .dashboard-content {
-    padding-bottom: 70px;
-  }
+  position: relative;
 }
 
 .dashboard-header {
@@ -27,6 +18,18 @@
   top: 0;
   z-index: 10;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .dashboard-content {
+    padding-bottom: 80px;
+  }
 }
 
 .status-bar {
@@ -96,10 +99,13 @@
 
 .dashboard-content {
   padding: 1.5rem;
-  padding-bottom: 1rem;
+  padding-bottom: 80px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .status-card {
