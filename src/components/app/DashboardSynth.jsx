@@ -1,29 +1,21 @@
 import React from 'react'
 import './Dashboard.css'
 
-function Dashboard({
-  onNavigate,
-  onShowRecharge,
-  onShowCriticalAlert,
-  onShowRechargeState,
-  onShowSynthState,
-  onShowVideoCall
-}) {
+function DashboardSynth({ onNavigate }) {
   const [currentTime] = React.useState(new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }))
-  const [phoneBattery] = React.useState(85)
+  const [phoneBattery] = React.useState(86)
 
   const braceletData = {
-    status: 'Operativo',
-    battery: 92,
-    reservoir: 78,
-    statusColor: '#4CAF50'
+    status: 'Sintetizando y Cargando...',
+    battery: 30,
+    reservoir: 18,
+    statusColor: '#2196F3'
   }
 
   const drdData = {
-    status: 'Listo',
+    status: 'En Proceso',
     cmpLevel: 80,
-    cmpEstimated: 'Restan 10 meses',
-    statusColor: '#4CAF50'
+    statusColor: '#2196F3'
   }
 
   return (
@@ -45,13 +37,13 @@ function Dashboard({
       </header>
 
       <div className="dashboard-content">
-        {/* Card 1: Brazalete */}
+        {/* Card 1 */}
         <div className="status-card bracelet-card" onClick={() => onNavigate('bracelet')}>
           <div className="card-header">
-            <div className="card-icon bracelet-icon">
+            <div className="card-icon bracelet-icon" style={{ background: 'linear-gradient(135deg, #2196F3 0%, #21CBF3 100%)' }}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="8" width="18" height="12" rx="2" />
-                <path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2" />
+                <path d="M21 12.79A9 9 0 1 1 11.21 3" />
+                <polyline points="21 3 21 12 12 12" />
               </svg>
             </div>
             <div className="card-title-section">
@@ -61,7 +53,7 @@ function Dashboard({
               </span>
             </div>
           </div>
-          
+
           <div className="card-metrics">
             <div className="metric">
               <div className="metric-label">
@@ -69,34 +61,30 @@ function Dashboard({
                 <span className="metric-value">{braceletData.battery}%</span>
               </div>
               <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${braceletData.battery}%`, backgroundColor: '#4CAF50' }}
-                ></div>
+                <div className="progress-fill" style={{ width: `${braceletData.battery}%`, backgroundColor: '#2196F3' }}></div>
               </div>
             </div>
-            
+
             <div className="metric">
               <div className="metric-label">
                 <span>Reservorio</span>
                 <span className="metric-value">{braceletData.reservoir}%</span>
               </div>
               <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${braceletData.reservoir}%`, backgroundColor: '#2196F3' }}
-                ></div>
+                <div className="progress-fill" style={{ width: `${braceletData.reservoir}%`, backgroundColor: '#03A9F4' }}></div>
               </div>
             </div>
           </div>
-          
-          <button className="card-button">Ver Detalles →</button>
+
+          <p className="metric-estimate" style={{ marginTop: '0.5rem', color: '#1976D2', fontWeight: 600 }}>
+            No retirar hasta completar proceso (DRD bloqueado).
+          </p>
         </div>
 
-        {/* Card 2: DRD */}
+        {/* Card 2 */}
         <div className="status-card drd-card">
           <div className="card-header">
-            <div className="card-icon drd-icon">
+            <div className="card-icon drd-icon" style={{ background: 'linear-gradient(135deg, #2196F3 0%, #21CBF3 100%)' }}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                 <polyline points="9 22 9 12 15 12 15 22" />
@@ -109,7 +97,7 @@ function Dashboard({
               </span>
             </div>
           </div>
-          
+
           <div className="card-metrics">
             <div className="metric">
               <div className="metric-label">
@@ -117,68 +105,27 @@ function Dashboard({
                 <span className="metric-value">{drdData.cmpLevel}%</span>
               </div>
               <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${drdData.cmpLevel}%`, backgroundColor: '#FF9800' }}
-                ></div>
+                <div className="progress-fill" style={{ width: `${drdData.cmpLevel}%`, backgroundColor: '#2196F3' }}></div>
               </div>
-              <p className="metric-estimate">Suministro Anual: {drdData.cmpLevel}% ({drdData.cmpEstimated})</p>
+              <p className="metric-estimate">Suministro Anual: {drdData.cmpLevel}%</p>
             </div>
           </div>
-          
-          <button className="card-button" disabled>Programar Mantenimiento Anual</button>
         </div>
 
-        {/* Card 3: Resumen Diario */}
-        <div className="daily-summary-card">
-          <div className="summary-icon">
+        {/* Card 3 */}
+        <div className="daily-summary-card" style={{ background: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)' }}>
+          <div className="summary-icon" style={{ background: '#2196F3' }}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
               <polyline points="22 4 12 14.01 9 11.01" />
             </svg>
           </div>
-          <p className="summary-text">¡Excelente! Tu salud está estable.</p>
-        </div>
-
-        {/* Botones de navegación para ver todos los frames */}
-        <div className="frame-navigation">
-          <button 
-            className="frame-button" 
-            onClick={onShowCriticalAlert}
-            style={{ background: '#ff9800' }}
-          >
-            Ver APP-02 (Alerta Crítica)
-          </button>
-          <button 
-            className="frame-button" 
-            onClick={onShowRechargeState}
-            style={{ background: '#f57c00' }}
-          >
-            Ver APP-03 (Requiere Recarga)
-          </button>
-          {onShowSynthState && (
-            <button 
-              className="frame-button" 
-              onClick={onShowSynthState}
-              style={{ background: '#1976d2' }}
-            >
-              Ver APP-07 (Sintetizando)
-            </button>
-          )}
-          {onShowVideoCall && (
-            <button 
-              className="frame-button" 
-              onClick={onShowVideoCall}
-              style={{ background: '#26a69a' }}
-            >
-              Ver APP-08 (Videollamada)
-            </button>
-          )}
+          <p className="summary-text" style={{ color: '#1565C0' }}>Tu salud está bajo control.</p>
         </div>
       </div>
     </div>
   )
 }
 
-export default Dashboard
+export default DashboardSynth
 

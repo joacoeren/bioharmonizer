@@ -1,7 +1,7 @@
 import React from 'react'
 import './CriticalAlert.css'
 
-function CriticalAlert({ onClose, onNavigate }) {
+function CriticalAlert({ onClose, onNavigate, onConfirm }) {
   return (
     <div className="critical-alert">
       <div className="critical-alert-content">
@@ -20,10 +20,29 @@ function CriticalAlert({ onClose, onNavigate }) {
           <strong>NECESARIO:</strong> Por favor, acopla tu brazalete al DRD esta noche para que sintetice la nueva formulación.
         </div>
         <div className="critical-actions">
-          <button className="critical-button primary" onClick={onClose}>
+          <button
+            className="critical-button primary"
+            onClick={() => {
+              if (onConfirm) {
+                onConfirm()
+              } else if (onClose) {
+                onClose()
+              }
+            }}
+          >
             Entendido
           </button>
-          <button className="critical-button secondary" onClick={() => onNavigate && onNavigate('support')}>
+          <button
+            className="critical-button secondary"
+            onClick={() => {
+              if (onNavigate) {
+                onNavigate('support')
+              }
+              if (onClose) {
+                onClose()
+              }
+            }}
+          >
             Llamar al Polo
           </button>
         </div>

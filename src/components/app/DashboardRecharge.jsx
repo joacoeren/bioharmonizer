@@ -1,7 +1,7 @@
 import React from 'react'
 import './Dashboard.css'
 
-function DashboardRecharge({ onNavigate, onBackToOK }) {
+function DashboardRecharge({ onNavigate, onBackToOK, onShowSynthState }) {
   const [currentTime] = React.useState(new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }))
   const [phoneBattery] = React.useState(85)
 
@@ -133,19 +133,28 @@ function DashboardRecharge({ onNavigate, onBackToOK }) {
           </div>
         </div>
 
-        {/* Botón para volver a estado OK */}
-        {onBackToOK && (
-          <button 
-            className="frame-button" 
-            onClick={onBackToOK}
-            style={{ 
-              marginTop: '1rem',
-              background: '#4CAF50' 
-            }}
-          >
-            Volver a APP-01 (Estado OK)
-          </button>
-        )}
+        <div className="frame-navigation">
+          {onBackToOK && (
+            <button 
+              className="frame-button" 
+              onClick={onBackToOK}
+              style={{ 
+                background: '#4CAF50' 
+              }}
+            >
+              Volver a APP-01 (Estado OK)
+            </button>
+          )}
+          {onShowSynthState && (
+            <button 
+              className="frame-button" 
+              onClick={onShowSynthState}
+              style={{ background: '#1976d2' }}
+            >
+              Ver APP-07 (Sintetizando)
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )

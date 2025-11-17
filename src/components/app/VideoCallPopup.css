@@ -1,0 +1,110 @@
+.videocall-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1500;
+}
+
+.videocall-popup-content {
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: slideUp 0.3s ease;
+}
+
+.videocall-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin: 0 auto 1.5rem;
+}
+
+.videocall-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.videocall-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e88e5;
+}
+
+.videocall-message {
+  margin: 0 0 2rem 0;
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.videocall-message strong {
+  color: #d32f2f;
+}
+
+.videocall-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.videocall-button {
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.videocall-button:active {
+  transform: scale(0.98);
+}
+
+.videocall-button.primary {
+  background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%);
+  color: white;
+  box-shadow: 0 6px 18px rgba(66, 165, 245, 0.4);
+}
+
+.videocall-button.secondary {
+  background: #f5f5f5;
+  color: #444;
+}
+
+.videocall-button.secondary.outline {
+  background: white;
+  border: 1px solid #e0e0e0;
+  color: #666;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
