@@ -1,7 +1,7 @@
 import React from 'react'
 import './CriticalAlert.css'
 
-function CriticalAlert({ onClose }) {
+function CriticalAlert({ onClose, onNavigate }) {
   return (
     <div className="critical-alert">
       <div className="critical-alert-content">
@@ -12,26 +12,21 @@ function CriticalAlert({ onClose }) {
             <line x1="12" y1="17" x2="12.01" y2="17" />
           </svg>
         </div>
-        <h1 className="critical-title">¡ALERTA CRÍTICA: Falla del Sistema!</h1>
+        <h1 className="critical-title">⚠ ¡Alerta Crítica: Ajuste de Dosis!</h1>
         <p className="critical-message">
-          Tu DRD ha detectado un error y no puede sintetizar el medicamento. La reserva de emergencia de tu brazalete tiene <strong>3 días restantes</strong>. Hemos notificado al Polo. Te contactaremos inmediatamente. Por favor, no intentes manipular el DRD.
+          Tu Bio-Harmonizer detectó una variación metabólica importante. La Dra. Ríos ya ajustó tu dosis de forma remota para mantenerte seguro.
         </p>
-        <div className="critical-info">
-          <div className="critical-info-item">
-            <span className="critical-info-label">Código de Error:</span>
-            <span className="critical-info-value">E01 - Sensor</span>
-          </div>
-          <div className="critical-info-item">
-            <span className="critical-info-label">Reserva de Emergencia:</span>
-            <span className="critical-info-value">3 días</span>
-          </div>
+        <div className="critical-instruction">
+          <strong>NECESARIO:</strong> Por favor, acopla tu brazalete al DRD esta noche para que sintetice la nueva formulación.
         </div>
-        <button className="critical-button" onClick={onClose}>
-          Ver Pasos de Emergencia
-        </button>
-        <button className="critical-button-secondary" onClick={onClose}>
-          Entendido
-        </button>
+        <div className="critical-actions">
+          <button className="critical-button primary" onClick={onClose}>
+            Entendido
+          </button>
+          <button className="critical-button secondary" onClick={() => onNavigate && onNavigate('support')}>
+            Llamar al Polo
+          </button>
+        </div>
       </div>
     </div>
   )

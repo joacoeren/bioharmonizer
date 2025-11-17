@@ -1,22 +1,21 @@
 import React from 'react'
 import './Dashboard.css'
 
-function Dashboard({ onNavigate, onShowRecharge, onShowCriticalAlert, onShowRechargeState }) {
+function DashboardRecharge({ onNavigate, onBackToOK }) {
   const [currentTime] = React.useState(new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }))
   const [phoneBattery] = React.useState(85)
 
   const braceletData = {
-    status: 'Operativo',
-    battery: 92,
-    reservoir: 78,
-    statusColor: '#4CAF50'
+    status: 'Requiere Recarga',
+    battery: 20,
+    reservoir: 5,
+    statusColor: '#FF9800'
   }
 
   const drdData = {
-    status: 'Listo',
+    status: 'Esperando Brazalete',
     cmpLevel: 80,
-    cmpEstimated: 'Restan 10 meses',
-    statusColor: '#4CAF50'
+    statusColor: '#FF9800'
   }
 
   return (
@@ -41,10 +40,11 @@ function Dashboard({ onNavigate, onShowRecharge, onShowCriticalAlert, onShowRech
         {/* Card 1: Brazalete */}
         <div className="status-card bracelet-card" onClick={() => onNavigate('bracelet')}>
           <div className="card-header">
-            <div className="card-icon bracelet-icon">
+            <div className="card-icon bracelet-icon" style={{ background: 'linear-gradient(135deg, #FF9800 0%, #F57C00 100%)' }}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="8" width="18" height="12" rx="2" />
-                <path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2" />
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
               </svg>
             </div>
             <div className="card-title-section">
@@ -64,7 +64,7 @@ function Dashboard({ onNavigate, onShowRecharge, onShowCriticalAlert, onShowRech
               <div className="progress-bar">
                 <div 
                   className="progress-fill" 
-                  style={{ width: `${braceletData.battery}%`, backgroundColor: '#4CAF50' }}
+                  style={{ width: `${braceletData.battery}%`, backgroundColor: '#d32f2f' }}
                 ></div>
               </div>
             </div>
@@ -77,7 +77,7 @@ function Dashboard({ onNavigate, onShowRecharge, onShowCriticalAlert, onShowRech
               <div className="progress-bar">
                 <div 
                   className="progress-fill" 
-                  style={{ width: `${braceletData.reservoir}%`, backgroundColor: '#2196F3' }}
+                  style={{ width: `${braceletData.reservoir}%`, backgroundColor: '#d32f2f' }}
                 ></div>
               </div>
             </div>
@@ -115,45 +115,41 @@ function Dashboard({ onNavigate, onShowRecharge, onShowCriticalAlert, onShowRech
                   style={{ width: `${drdData.cmpLevel}%`, backgroundColor: '#FF9800' }}
                 ></div>
               </div>
-              <p className="metric-estimate">Suministro Anual: {drdData.cmpLevel}% ({drdData.cmpEstimated})</p>
+              <p className="metric-estimate">Suministro Anual: {drdData.cmpLevel}%</p>
             </div>
           </div>
-          
-          <button className="card-button" disabled>Programar Mantenimiento Anual</button>
         </div>
 
-        {/* Card 3: Resumen Diario */}
-        <div className="daily-summary-card">
-          <div className="summary-icon">
+        {/* Card 3: Tarea Pendiente */}
+        <div className="pending-task-card">
+          <div className="task-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
             </svg>
           </div>
-          <p className="summary-text">¡Excelente! Tu salud está estable.</p>
+          <div className="task-content">
+            <p className="task-text">Tarea: Acoplar Brazalete al DRD esta noche.</p>
+          </div>
         </div>
 
-        {/* Botones de navegación para ver todos los frames */}
-        <div className="frame-navigation">
+        {/* Botón para volver a estado OK */}
+        {onBackToOK && (
           <button 
             className="frame-button" 
-            onClick={onShowCriticalAlert}
-            style={{ background: '#ff9800' }}
+            onClick={onBackToOK}
+            style={{ 
+              marginTop: '1rem',
+              background: '#4CAF50' 
+            }}
           >
-            Ver APP-02 (Alerta Crítica)
+            Volver a APP-01 (Estado OK)
           </button>
-          <button 
-            className="frame-button" 
-            onClick={onShowRechargeState}
-            style={{ background: '#f57c00' }}
-          >
-            Ver APP-03 (Requiere Recarga)
-          </button>
-        </div>
+        )}
       </div>
     </div>
   )
 }
 
-export default Dashboard
+export default DashboardRecharge
 

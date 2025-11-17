@@ -1,8 +1,11 @@
 .bracelet-details {
-  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(180deg, #f5f7fa 0%, #ffffff 100%);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  min-height: 0;
 }
 
 .details-header {
@@ -49,7 +52,7 @@
 
 .details-content {
   padding: 1.5rem;
-  padding-bottom: 5rem;
+  padding-bottom: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

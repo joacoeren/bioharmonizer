@@ -2,17 +2,26 @@ import React from 'react'
 import './BraceletDetails.css'
 
 function BraceletDetails({ onNavigate }) {
+  // Gráfico mostrando pico antes del ajuste y luego estabilización
   const chartData = [
     { time: '00:00', value: 45 },
     { time: '04:00', value: 50 },
     { time: '08:00', value: 65 },
-    { time: '12:00', value: 70 },
-    { time: '16:00', value: 68 },
-    { time: '20:00', value: 72 },
+    { time: '12:00', value: 85 }, // Pico antes del ajuste
+    { time: '16:00', value: 70 }, // Después del ajuste
+    { time: '20:00', value: 68 },
     { time: '24:00', value: 70 }
   ]
 
   const maxValue = Math.max(...chartData.map(d => d.value))
+  
+  const doseInfo = {
+    base: '25 mg/día',
+    adjustedDate: '15 de enero de 2046',
+    adjustedBy: 'Dra. Ríos',
+    sensorStatus: 'OK',
+    nextRecharge: 'En 3 días'
+  }
 
   return (
     <div className="bracelet-details">
@@ -23,13 +32,18 @@ function BraceletDetails({ onNavigate }) {
           </svg>
         </button>
         <h1>Bio-Harmonizer</h1>
-        <div style={{ width: '40px' }}></div>
+        <button className="settings-button" style={{ width: '40px', height: '40px', border: 'none', background: 'rgba(255, 255, 255, 0.2)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '20px', height: '20px' }}>
+            <circle cx="12" cy="12" r="3" />
+            <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24" />
+          </svg>
+        </button>
       </header>
 
       <div className="details-content">
         {/* Gráfico de línea de tiempo */}
         <div className="chart-card">
-          <h3 className="chart-title">Niveles de Fármaco (Últimas 24h)</h3>
+          <h3 className="chart-title">Nivel de Fármaco en Sangre (Estimado) - Últimas 24/48h</h3>
           <div className="chart-container">
             <div className="chart-y-axis">
               <span>100%</span>
@@ -138,12 +152,20 @@ function BraceletDetails({ onNavigate }) {
         {/* Info Adicional */}
         <div className="info-card">
           <div className="info-item">
-            <span className="info-label">Última Calibración:</span>
-            <span className="info-value">Hace 2 días</span>
+            <span className="info-label">Dosis Base Actual:</span>
+            <span className="info-value">{doseInfo.base}</span>
           </div>
           <div className="info-item">
-            <span className="info-label">Estado del Sistema:</span>
-            <span className="info-value status-ok">Operativo</span>
+            <span className="info-label">Ajustada el:</span>
+            <span className="info-value">{doseInfo.adjustedDate} por {doseInfo.adjustedBy}</span>
+          </div>
+          <div className="info-item">
+            <span className="info-label">Estado de Sensores:</span>
+            <span className="info-value status-ok">{doseInfo.sensorStatus}</span>
+          </div>
+          <div className="info-item">
+            <span className="info-label">Próxima Recarga Sugerida:</span>
+            <span className="info-value">{doseInfo.nextRecharge}</span>
           </div>
         </div>
 

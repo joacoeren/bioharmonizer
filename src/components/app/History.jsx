@@ -3,12 +3,11 @@ import './History.css'
 
 function History({ onNavigate }) {
   const historyItems = [
-    { date: 'Hoy', time: '10:30 PM', event: 'Recarga completada', status: 'success' },
-    { date: 'Ayer', time: '10:15 PM', event: 'Recarga iniciada', status: 'info' },
-    { date: '15 Ene', time: '10:30 PM', event: 'Recarga completada', status: 'success' },
-    { date: '14 Ene', time: '10:20 PM', event: 'Ajuste de dosis remoto', status: 'info' },
-    { date: '13 Ene', time: '10:30 PM', event: 'Recarga completada', status: 'success' },
-    { date: '12 Ene', time: '09:45 AM', event: 'Calibración del brazalete', status: 'success' }
+    { date: '15 de enero', event: 'Dosis ajustada remotamente por Dra. Ríos. (Ver Mensajes)', status: 'info', hasLink: true },
+    { date: '14 de enero', event: 'Recarga de Brazalete completada.', status: 'success' },
+    { date: '10 de enero', event: 'Alerta de niveles de estrés detectados.', status: 'warning' },
+    { date: '8 de enero', event: 'Recarga de Brazalete completada.', status: 'success' },
+    { date: '2 de enero', event: 'Recarga de Brazalete completada.', status: 'success' }
   ]
 
   return (
@@ -35,10 +34,29 @@ function History({ onNavigate }) {
                 <div className="history-header-item">
                   <p className="history-event">{item.event}</p>
                   <span className={`history-status ${item.status}`}>
-                    {item.status === 'success' ? '✓' : 'ℹ'}
+                    {item.status === 'success' ? '✓' : item.status === 'warning' ? '⚠' : 'ℹ'}
                   </span>
                 </div>
-                <p className="history-date">{item.date} • {item.time}</p>
+                <p className="history-date">{item.date}</p>
+                {item.hasLink && (
+                  <button 
+                    className="history-link-button"
+                    onClick={() => onNavigate('messages')}
+                    style={{
+                      marginTop: '0.5rem',
+                      padding: '0.5rem',
+                      background: '#f5f5f5',
+                      border: 'none',
+                      borderRadius: '8px',
+                      color: '#667eea',
+                      fontSize: '0.85rem',
+                      fontWeight: '600',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Ver Mensajes →
+                  </button>
+                )}
               </div>
             </div>
           ))}

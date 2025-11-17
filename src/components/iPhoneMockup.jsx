@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Dashboard from './app/Dashboard'
+import DashboardRecharge from './app/DashboardRecharge'
 import BraceletDetails from './app/BraceletDetails'
 import Messages from './app/Messages'
 import History from './app/History'
@@ -11,6 +12,7 @@ import './iPhoneMockup.css'
 
 function PhoneMockup() {
   const [currentScreen, setCurrentScreen] = useState('dashboard')
+  const [dashboardState, setDashboardState] = useState('ok') // 'ok' o 'recharge'
   const [showRechargeNotification, setShowRechargeNotification] = useState(false)
   const [showCriticalAlert, setShowCriticalAlert] = useState(false)
 
@@ -21,7 +23,18 @@ function PhoneMockup() {
   const renderScreen = () => {
     switch (currentScreen) {
       case 'dashboard':
-        return <Dashboard onNavigate={handleNavigate} onShowRecharge={() => setShowRechargeNotification(true)} />
+        if (dashboardState === 'recharge') {
+          return <DashboardRecharge 
+            onNavigate={handleNavigate}
+            onBackToOK={() => setDashboardState('ok')}
+          />
+        }
+        return <Dashboard 
+          onNavigate={handleNavigate} 
+          onShowRecharge={() => setShowRechargeNotification(true)}
+          onShowCriticalAlert={() => setShowCriticalAlert(true)}
+          onShowRechargeState={() => setDashboardState('recharge')}
+        />
       case 'bracelet':
         return <BraceletDetails onNavigate={handleNavigate} />
       case 'messages':
@@ -45,7 +58,10 @@ function PhoneMockup() {
         <div className="iphone-screen">
           <div className="app-content">
             {showCriticalAlert && (
-              <CriticalAlert onClose={() => setShowCriticalAlert(false)} />
+              <CriticalAlert 
+                onClose={() => setShowCriticalAlert(false)} 
+                onNavigate={handleNavigate}
+              />
             )}
             {!showCriticalAlert && showRechargeNotification && (
               <RechargeNotification 
@@ -57,10 +73,10 @@ function PhoneMockup() {
               />
             )}
             {!showCriticalAlert && !showRechargeNotification && (
-              <>
+              <div className="screen-wrapper">
                 {renderScreen()}
                 <BottomNav currentScreen={currentScreen} onNavigate={handleNavigate} />
-              </>
+              </div>
             )}
           </div>
         </div>

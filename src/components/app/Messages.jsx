@@ -2,29 +2,27 @@ import React, { useState } from 'react'
 import './Messages.css'
 
 function Messages({ onNavigate }) {
-  const [messages] = useState([
-    {
-      id: 1,
-      sender: 'Dra. Ríos',
-      message: 'Hola Carlos, ajusté tu dosis según los últimos biomarcadores. Deberías notar una mejora en los próximos días.',
-      time: 'Hace 2 horas',
-      type: 'received'
-    },
-    {
-      id: 2,
-      sender: 'Sistema',
-      message: 'Tu Bio-Harmonizer se recargó exitosamente. Reservorio al 100% y batería al 95%.',
-      time: 'Ayer, 10:30 PM',
-      type: 'system'
-    },
-    {
-      id: 3,
-      sender: 'Tú',
-      message: 'Gracias doctora, noto que me siento mejor. ¿Debo hacer algún cambio en mi rutina?',
-      time: 'Hace 1 hora',
-      type: 'sent'
-    }
-  ])
+  const [activeChat, setActiveChat] = useState('rios')
+  
+  const chats = [
+    { id: 'rios', name: 'Dra. Ríos', active: true },
+    { id: 'support', name: 'Polo Soporte Técnico', active: false }
+  ]
+
+  const messages = {
+    rios: [
+      {
+        id: 1,
+        sender: 'Dra. Ríos',
+        message: 'Hola Carlos, un gusto hablar con vos. Como te dije, los biomarcadores se estabilizaron perfectamente con la nueva dosis. Estarás en control por una semana. Cualquier duda, no dudes en escribirme.',
+        time: 'Hoy, 14:30',
+        type: 'received'
+      }
+    ],
+    support: []
+  }
+
+  const currentMessages = messages[activeChat] || []
 
   const [newMessage, setNewMessage] = useState('')
 
@@ -44,12 +42,37 @@ function Messages({ onNavigate }) {
           </svg>
         </button>
         <h1>Mensajes</h1>
-        <div style={{ width: '40px' }}></div>
+        <button className="new-message-button" style={{ width: '40px', height: '40px', border: 'none', background: 'rgba(255, 255, 255, 0.2)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '20px', height: '20px' }}>
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
       </header>
 
       <div className="messages-content">
+        {/* Lista de Chats */}
+        <div className="chats-list">
+          {chats.map((chat) => (
+            <div 
+              key={chat.id}
+              className={`chat-item ${activeChat === chat.id ? 'active' : ''}`}
+              onClick={() => setActiveChat(chat.id)}
+            >
+              <div className="chat-avatar">
+                {chat.name.charAt(0)}
+              </div>
+              <div className="chat-info">
+                <p className="chat-name">{chat.name}</p>
+                {chat.active && <span className="chat-badge">Activo</span>}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Mensajes del chat activo */}
         <div className="messages-list">
-          {messages.map((msg) => (
+          {currentMessages.map((msg) => (
             <div key={msg.id} className={`message-item ${msg.type}`}>
               {msg.type === 'received' && (
                 <div className="message-avatar">
