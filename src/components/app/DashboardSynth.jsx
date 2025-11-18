@@ -1,7 +1,7 @@
 import React from 'react'
 import './Dashboard.css'
 
-function DashboardSynth({ onNavigate }) {
+function DashboardSynth({ onNavigate, onBackToOK }) {
   const [currentTime] = React.useState(new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }))
   const [phoneBattery] = React.useState(86)
 
@@ -122,6 +122,26 @@ function DashboardSynth({ onNavigate }) {
           </div>
           <p className="summary-text" style={{ color: '#1565C0' }}>Tu salud está bajo control.</p>
         </div>
+
+        {/* Botón para volver al dashboard inicial */}
+        <button 
+          className="card-button" 
+          onClick={() => {
+            if (onNavigate) {
+              onNavigate('dashboard')
+            }
+            if (onBackToOK) {
+              onBackToOK()
+            }
+          }}
+          style={{ 
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: 'white',
+            marginTop: '1rem'
+          }}
+        >
+          Volver al Inicio
+        </button>
       </div>
     </div>
   )

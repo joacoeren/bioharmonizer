@@ -53,7 +53,13 @@ function PhoneMockup() {
           />
         }
         if (dashboardState === 'synth') {
-          return <DashboardSynth onNavigate={handleNavigate} />
+          return <DashboardSynth 
+            onNavigate={handleNavigate} 
+            onBackToOK={() => {
+              setDashboardState('ok')
+              setCurrentScreen('dashboard')
+            }}
+          />
         }
         return <Dashboard 
           onNavigate={handleNavigate} 
@@ -111,7 +117,14 @@ function PhoneMockup() {
             {!showCriticalAlert && !showRechargeNotification && (
               <div className="screen-wrapper">
                 {renderScreen()}
-                <BottomNav currentScreen={currentScreen} onNavigate={handleNavigate} />
+                <BottomNav 
+                  currentScreen={currentScreen} 
+                  onNavigate={handleNavigate}
+                  onResetDashboard={() => {
+                    setDashboardState('ok')
+                    setCurrentScreen('dashboard')
+                  }}
+                />
               </div>
             )}
           </div>

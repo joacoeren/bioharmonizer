@@ -1,13 +1,20 @@
 import React from 'react'
 import './BottomNav.css'
 
-function BottomNav({ currentScreen, onNavigate }) {
+function BottomNav({ currentScreen, onNavigate, onResetDashboard }) {
   const navItems = [
     { id: 'dashboard', label: 'Inicio', icon: 'home' },
     { id: 'history', label: 'Historial', icon: 'history' },
     { id: 'messages', label: 'Mensajes', icon: 'messages' },
     { id: 'support', label: 'Soporte', icon: 'support' }
   ]
+
+  const handleNavClick = (itemId) => {
+    if (itemId === 'dashboard' && onResetDashboard) {
+      onResetDashboard()
+    }
+    onNavigate(itemId)
+  }
 
   const getIcon = (iconType) => {
     switch (iconType) {
@@ -50,7 +57,7 @@ function BottomNav({ currentScreen, onNavigate }) {
         <button
           key={item.id}
           className={`nav-item ${currentScreen === item.id ? 'active' : ''}`}
-          onClick={() => onNavigate(item.id)}
+          onClick={() => handleNavClick(item.id)}
         >
           <div className="nav-icon">
             {getIcon(item.icon)}
