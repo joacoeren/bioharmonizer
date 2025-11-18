@@ -14,7 +14,7 @@ function Dashboard({
 
   const braceletData = {
     status: 'Operativo',
-    battery: 92,
+    battery: 91,
     reservoir: 78,
     statusColor: '#4CAF50'
   }
