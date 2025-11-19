@@ -1,7 +1,7 @@
 import React from 'react'
 import './Dashboard.css'
 
-function DashboardRecharge({ onNavigate, onBackToOK, onShowSynthState }) {
+function DashboardRecharge({ onNavigate, onBackToOK }) {
   const [currentTime] = React.useState(new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }))
   const [phoneBattery] = React.useState(85)
 
@@ -37,6 +37,22 @@ function DashboardRecharge({ onNavigate, onBackToOK, onShowSynthState }) {
       </header>
 
       <div className="dashboard-content">
+        <div className="return-top-action">
+          <button
+            className="return-button"
+            onClick={() => {
+              if (onBackToOK) {
+                onBackToOK()
+              }
+              if (onNavigate) {
+                onNavigate('dashboard')
+              }
+            }}
+          >
+            ← Volver al inicio
+          </button>
+        </div>
+
         {/* Card 1: Brazalete */}
         <div className="status-card bracelet-card" onClick={() => onNavigate('bracelet')}>
           <div className="card-header">
@@ -133,28 +149,6 @@ function DashboardRecharge({ onNavigate, onBackToOK, onShowSynthState }) {
           </div>
         </div>
 
-        <div className="frame-navigation">
-          {onBackToOK && (
-            <button 
-              className="frame-button" 
-              onClick={onBackToOK}
-              style={{ 
-                background: '#4CAF50' 
-              }}
-            >
-              Volver a APP-01 (Estado OK)
-            </button>
-          )}
-          {onShowSynthState && (
-            <button 
-              className="frame-button" 
-              onClick={onShowSynthState}
-              style={{ background: '#1976d2' }}
-            >
-              Ver APP-07 (Sintetizando)
-            </button>
-          )}
-        </div>
       </div>
     </div>
   )

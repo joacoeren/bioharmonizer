@@ -49,7 +49,6 @@ function PhoneMockup() {
           return <DashboardRecharge 
             onNavigate={handleNavigate}
             onBackToOK={() => setDashboardState('ok')}
-            onShowSynthState={() => setDashboardState('synth')}
           />
         }
         if (dashboardState === 'synth') {

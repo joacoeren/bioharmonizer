@@ -3,7 +3,6 @@ import './Dashboard.css'
 
 function Dashboard({
   onNavigate,
-  onShowRecharge,
   onShowCriticalAlert,
   onShowRechargeState,
   onShowSynthState,
@@ -45,6 +44,69 @@ function Dashboard({
       </header>
 
       <div className="dashboard-content">
+        <div className="user-greeting">
+          <p>Hola Carlos</p>
+        </div>
+
+        <section className="notifications-section">
+          <div className="notifications-header">
+            <div>
+              <p className="notifications-label">Notificaciones activas</p>
+              <h2 className="notifications-title">Centro de alertas</h2>
+            </div>
+            <button
+              className="notifications-history"
+              onClick={() => onNavigate && onNavigate('history')}
+            >
+              Ver historial
+            </button>
+          </div>
+
+          <article className="notification-card notification-critical">
+            <div className="notification-meta">
+              <span className="notification-pill severity-high">Alta prioridad</span>
+            </div>
+            <h3>Alerta crítica: Ajuste de dosis</h3>
+            <div className="notification-actions compact">
+              <button
+                className="notification-button danger"
+                onClick={() => {
+                  if (onShowRechargeState) {
+                    onShowRechargeState()
+                  } else if (onNavigate) {
+                    onNavigate('bracelet')
+                  }
+                }}
+              >
+                Revisar alerta crítica
+              </button>
+            </div>
+          </article>
+
+          <article className="notification-card notification-video">
+            <div className="notification-meta">
+              <span className="notification-pill severity-medium">Videollamada</span>
+            </div>
+            <h3>Videollamada con la Dra. Ríos</h3>
+            <div className="notification-actions compact">
+              {onShowVideoCall && (
+                <button
+                  className="notification-button primary"
+                  onClick={() => onShowVideoCall()}
+                >
+                  Unirme a la videollamada
+                </button>
+              )}
+              <button
+                className="notification-button secondary"
+                onClick={() => onNavigate && onNavigate('messages')}
+              >
+                Revisar mensajes
+              </button>
+            </div>
+          </article>
+        </section>
+
         {/* Card 1: Brazalete */}
         <div className="status-card bracelet-card" onClick={() => onNavigate('bracelet')}>
           <div className="card-header">
@@ -138,42 +200,6 @@ function Dashboard({
             </svg>
           </div>
           <p className="summary-text">¡Excelente! Tu salud está estable.</p>
-        </div>
-
-        {/* Botones de navegación para ver todos los frames */}
-        <div className="frame-navigation">
-          <button 
-            className="frame-button" 
-            onClick={onShowCriticalAlert}
-            style={{ background: '#ff9800' }}
-          >
-            Ver APP-02 (Alerta Crítica)
-          </button>
-          <button 
-            className="frame-button" 
-            onClick={onShowRechargeState}
-            style={{ background: '#f57c00' }}
-          >
-            Ver APP-03 (Requiere Recarga)
-          </button>
-          {onShowSynthState && (
-            <button 
-              className="frame-button" 
-              onClick={onShowSynthState}
-              style={{ background: '#1976d2' }}
-            >
-              Ver APP-07 (Sintetizando)
-            </button>
-          )}
-          {onShowVideoCall && (
-            <button 
-              className="frame-button" 
-              onClick={onShowVideoCall}
-              style={{ background: '#26a69a' }}
-            >
-              Ver APP-08 (Videollamada)
-            </button>
-          )}
         </div>
       </div>
     </div>
