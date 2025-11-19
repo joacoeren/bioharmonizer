@@ -45,7 +45,7 @@ function Dashboard({
 
       <div className="dashboard-content">
         <div className="user-greeting">
-          <p>Hola Carlos</p>
+          <h2>Buen día, Carlos!</h2>
         </div>
 
         <section className="notifications-section">
@@ -107,6 +107,11 @@ function Dashboard({
           </article>
         </section>
 
+        <div className="section-header">
+          <p className="notifications-label">Resumen general</p>
+          <h2 className="notifications-title">Mis dispositivos</h2>
+        </div>
+
         {/* Card 1: Brazalete */}
         <div className="status-card bracelet-card" onClick={() => onNavigate('bracelet')}>
           <div className="card-header">
@@ -165,7 +170,7 @@ function Dashboard({
               </svg>
             </div>
             <div className="card-title-section">
-              <h3>Mi Micro-Farmacia</h3>
+              <h3>Mi Cargador</h3>
               <span className="status-badge" style={{ backgroundColor: drdData.statusColor }}>
                 {drdData.status}
               </span>

@@ -345,21 +345,21 @@
 }
 
 .user-greeting {
-  background: white;
-  border-radius: 16px;
-  padding: 1.25rem 1.5rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
-.user-greeting p {
+.user-greeting h2 {
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
   color: #1a1a1a;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 1.25rem 0 0.5rem;
 }
 
 .return-top-action {
@@ -489,18 +489,19 @@
 .notification-actions.compact {
   flex-wrap: nowrap;
   justify-content: flex-end;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .notification-button {
-  flex: 1;
-  min-width: 120px;
-  padding: 0.45rem 0.8rem;
+  flex: 0 0 auto;
+  min-width: 0;
+  padding: 0.15rem 0.65rem;
   border-radius: 12px;
   border: none;
   font-weight: 600;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
 }
 
 .notification-button.primary {
