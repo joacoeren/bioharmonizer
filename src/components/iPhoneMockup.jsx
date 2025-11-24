@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Dashboard from './app/Dashboard'
 import DashboardRecharge from './app/DashboardRecharge'
 import DashboardSynth from './app/DashboardSynth'
@@ -30,6 +30,19 @@ function PhoneMockup() {
     setDashboardState('recharge')
     setCurrentScreen('dashboard')
   }
+
+  // Mostrar alerta crítica cada 1 minuto
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Solo mostrar si no está siendo mostrada actualmente
+      if (!showCriticalAlert) {
+        setShowCriticalAlert(true)
+        setCriticalAlertReviewed(false) // Resetear para que aparezca en el dashboard
+      }
+    }, 60000) // 1 minuto = 60000ms
+
+    return () => clearInterval(interval)
+  }, [showCriticalAlert])
 
   const handleVideoCallJoin = () => {
     setShowVideoCallPopup(false)
