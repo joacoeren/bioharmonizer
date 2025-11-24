@@ -6,7 +6,8 @@ function Dashboard({
   onShowCriticalAlert,
   onShowRechargeState,
   onShowSynthState,
-  onShowVideoCall
+  onShowVideoCall,
+  criticalAlertReviewed = false
 }) {
   const [currentTime] = React.useState(new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }))
   const [phoneBattery] = React.useState(85)
@@ -62,26 +63,40 @@ function Dashboard({
             </button>
           </div>
 
-          <article className="notification-card notification-critical">
-            <div className="notification-meta">
-              <span className="notification-pill severity-high">Alta prioridad</span>
+          {!criticalAlertReviewed && (
+            <article className="notification-card notification-critical">
+              <div className="notification-meta">
+                <span className="notification-pill severity-high">Alta prioridad</span>
+              </div>
+              <h3>Alerta crítica: Ajuste de dosis</h3>
+              <div className="notification-actions compact">
+                <button
+                  className="notification-button danger"
+                  onClick={() => {
+                    if (onShowRechargeState) {
+                      onShowRechargeState()
+                    } else if (onNavigate) {
+                      onNavigate('bracelet')
+                    }
+                  }}
+                >
+                  Revisar alerta crítica
+                </button>
+              </div>
+            </article>
+          )}
+
+          {criticalAlertReviewed && (
+            <div className="daily-summary-card">
+              <div className="summary-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+              </div>
+              <p className="summary-text">¡Excelente! Tu salud está estable.</p>
             </div>
-            <h3>Alerta crítica: Ajuste de dosis</h3>
-            <div className="notification-actions compact">
-              <button
-                className="notification-button danger"
-                onClick={() => {
-                  if (onShowRechargeState) {
-                    onShowRechargeState()
-                  } else if (onNavigate) {
-                    onNavigate('bracelet')
-                  }
-                }}
-              >
-                Revisar alerta crítica
-              </button>
-            </div>
-          </article>
+          )}
 
           <article className="notification-card notification-video">
             <div className="notification-meta">
@@ -196,16 +211,6 @@ function Dashboard({
           <button className="card-button" disabled>Programar Mantenimiento Anual</button>
         </div>
 
-        {/* Card 3: Resumen Diario */}
-        <div className="daily-summary-card">
-          <div className="summary-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
-          </div>
-          <p className="summary-text">¡Excelente! Tu salud está estable.</p>
-        </div>
       </div>
     </div>
   )

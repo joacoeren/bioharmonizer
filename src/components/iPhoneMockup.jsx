@@ -18,6 +18,7 @@ function PhoneMockup() {
   const [showRechargeNotification, setShowRechargeNotification] = useState(false)
   const [showCriticalAlert, setShowCriticalAlert] = useState(false)
   const [showVideoCallPopup, setShowVideoCallPopup] = useState(false)
+  const [criticalAlertReviewed, setCriticalAlertReviewed] = useState(false)
 
   const handleNavigate = (screen) => {
     setCurrentScreen(screen)
@@ -25,6 +26,7 @@ function PhoneMockup() {
 
   const handleCriticalAcknowledge = () => {
     setShowCriticalAlert(false)
+    setCriticalAlertReviewed(true)
     setDashboardState('recharge')
     setCurrentScreen('dashboard')
   }
@@ -64,9 +66,12 @@ function PhoneMockup() {
           onNavigate={handleNavigate} 
           onShowRecharge={() => setShowRechargeNotification(true)}
           onShowCriticalAlert={() => setShowCriticalAlert(true)}
-          onShowRechargeState={() => setDashboardState('recharge')}
+          onShowRechargeState={() => {
+            setShowCriticalAlert(true)
+          }}
           onShowSynthState={() => setDashboardState('synth')}
           onShowVideoCall={() => setShowVideoCallPopup(true)}
+          criticalAlertReviewed={criticalAlertReviewed}
         />
       case 'bracelet':
         return <BraceletDetails onNavigate={handleNavigate} />
@@ -92,7 +97,10 @@ function PhoneMockup() {
           <div className="app-content">
             {showCriticalAlert && (
               <CriticalAlert 
-                onClose={() => setShowCriticalAlert(false)} 
+                onClose={() => {
+                  setShowCriticalAlert(false)
+                  setCriticalAlertReviewed(true)
+                }} 
                 onNavigate={handleNavigate}
                 onConfirm={handleCriticalAcknowledge}
               />

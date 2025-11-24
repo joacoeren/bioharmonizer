@@ -412,13 +412,13 @@
 }
 
 .notifications-history {
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: transparent;
+  border: none;
+  background: #1a73e8;
   border-radius: 999px;
   padding: 0.5rem 1rem;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #4a4a4a;
+  color: white;
   cursor: pointer;
 }
 
@@ -435,7 +435,7 @@
 
 .notification-critical {
   background: linear-gradient(135deg, rgba(255, 152, 0, 0.08), rgba(255, 235, 204, 0.4));
-  border-left-color: #ff9800;
+  border-left-color: #d32f2f;
 }
 
 .notification-synth {
@@ -470,8 +470,8 @@
 }
 
 .severity-medium {
-  background: rgba(255, 193, 7, 0.2);
-  color: #f57f17;
+  background: rgba(38, 166, 154, 0.15);
+  color: #26a69a;
 }
 
 .notification-card h3 {
@@ -506,6 +506,11 @@
 
 .notification-button.primary {
   background: #1a73e8;
+  color: white;
+}
+
+.notification-video .notification-button.primary {
+  background: #26a69a;
   color: white;
 }
 
