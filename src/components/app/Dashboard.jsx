@@ -7,7 +7,8 @@ function Dashboard({
   onShowRechargeState,
   onShowSynthState,
   onShowVideoCall,
-  criticalAlertReviewed = false
+  criticalAlertReviewed = false,
+  videoCallCompleted = false
 }) {
   const [currentTime] = React.useState(new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }))
   const [phoneBattery] = React.useState(85)
@@ -104,7 +105,7 @@ function Dashboard({
             </div>
             <h3>Videollamada con la Dra. Ríos</h3>
             <div className="notification-actions compact">
-              {onShowVideoCall && (
+              {onShowVideoCall && !videoCallCompleted && (
                 <button
                   className="notification-button primary"
                   onClick={() => onShowVideoCall()}
@@ -116,7 +117,7 @@ function Dashboard({
                 className="notification-button secondary"
                 onClick={() => onNavigate && onNavigate('messages')}
               >
-                Revisar mensajes
+                Transcripción de videollamada
               </button>
             </div>
           </article>

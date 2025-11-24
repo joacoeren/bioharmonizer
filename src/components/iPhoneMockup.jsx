@@ -19,6 +19,8 @@ function PhoneMockup() {
   const [showCriticalAlert, setShowCriticalAlert] = useState(false)
   const [showVideoCallPopup, setShowVideoCallPopup] = useState(false)
   const [criticalAlertReviewed, setCriticalAlertReviewed] = useState(false)
+  const [videoCallCompleted, setVideoCallCompleted] = useState(false)
+  const [lastCriticalAlertTime, setLastCriticalAlertTime] = useState(0)
 
   const handleNavigate = (screen) => {
     setCurrentScreen(screen)
@@ -27,25 +29,37 @@ function PhoneMockup() {
   const handleCriticalAcknowledge = () => {
     setShowCriticalAlert(false)
     setCriticalAlertReviewed(true)
+    setLastCriticalAlertTime(Date.now())
     setDashboardState('recharge')
     setCurrentScreen('dashboard')
   }
 
-  // Mostrar alerta crítica cada 1 minuto
+  const handleCriticalClose = () => {
+    setShowCriticalAlert(false)
+    setCriticalAlertReviewed(true)
+    setLastCriticalAlertTime(Date.now())
+  }
+
+  // Mostrar alerta crítica cada 5 minutos
   useEffect(() => {
     const interval = setInterval(() => {
-      // Solo mostrar si no está siendo mostrada actualmente
-      if (!showCriticalAlert) {
+      // Solo mostrar si no está siendo mostrada actualmente y han pasado 5 minutos desde la última vez
+      const now = Date.now()
+      const fiveMinutes = 300000 // 5 minutos en ms
+      
+      if (!showCriticalAlert && (now - lastCriticalAlertTime >= fiveMinutes || lastCriticalAlertTime === 0)) {
         setShowCriticalAlert(true)
         setCriticalAlertReviewed(false) // Resetear para que aparezca en el dashboard
+        setLastCriticalAlertTime(now)
       }
-    }, 60000) // 1 minuto = 60000ms
+    }, 300000) // Verificar cada 5 minutos
 
     return () => clearInterval(interval)
-  }, [showCriticalAlert])
+  }, [showCriticalAlert, lastCriticalAlertTime])
 
   const handleVideoCallJoin = () => {
     setShowVideoCallPopup(false)
+    setVideoCallCompleted(true)
   }
 
   const handleVideoCallRemind = () => {
@@ -80,11 +94,14 @@ function PhoneMockup() {
           onShowRecharge={() => setShowRechargeNotification(true)}
           onShowCriticalAlert={() => setShowCriticalAlert(true)}
           onShowRechargeState={() => {
-            setShowCriticalAlert(true)
+            setCriticalAlertReviewed(true)
+            setDashboardState('recharge')
+            setCurrentScreen('dashboard')
           }}
           onShowSynthState={() => setDashboardState('synth')}
           onShowVideoCall={() => setShowVideoCallPopup(true)}
           criticalAlertReviewed={criticalAlertReviewed}
+          videoCallCompleted={videoCallCompleted}
         />
       case 'bracelet':
         return <BraceletDetails onNavigate={handleNavigate} />
@@ -110,10 +127,7 @@ function PhoneMockup() {
           <div className="app-content">
             {showCriticalAlert && (
               <CriticalAlert 
-                onClose={() => {
-                  setShowCriticalAlert(false)
-                  setCriticalAlertReviewed(true)
-                }} 
+                onClose={handleCriticalClose}
                 onNavigate={handleNavigate}
                 onConfirm={handleCriticalAcknowledge}
               />

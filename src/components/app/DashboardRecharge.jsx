@@ -53,6 +53,10 @@ function DashboardRecharge({ onNavigate, onBackToOK }) {
           </button>
         </div>
 
+        <div className="critical-disclaimer-instruction">
+          <strong>NECESARIO:</strong> Por favor, acopla tu brazalete al DRD esta noche para que sintetice la nueva formulación.
+        </div>
+
         {/* Card 1: Brazalete */}
         <div className="status-card bracelet-card" onClick={() => onNavigate('bracelet')}>
           <div className="card-header">

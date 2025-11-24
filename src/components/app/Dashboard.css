@@ -362,6 +362,23 @@
   margin: 1.25rem 0 0.5rem;
 }
 
+.critical-disclaimer-instruction {
+  background: #fff3cd;
+  border-left: 4px solid #ff9800;
+  border-radius: 8px;
+  padding: 0.875rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #856404;
+  text-align: left;
+}
+
+.critical-disclaimer-instruction strong {
+  color: #d32f2f;
+  font-weight: 700;
+}
+
 .return-top-action {
   margin-bottom: 1rem;
 }
